@@ -32,17 +32,17 @@ int main()
 {
     generate_numbers(data, DATA_SIZE);
 
-    int *gpudata, *result;
-    cudaMalloc((void**) &gpudata, sizeof(int) * DATA_SIZE);
+    int *gpu_data, *result, gpu_sum, cpu_sum = 0;
+    cudaMalloc((void**) &gpu_data, sizeof(int) * DATA_SIZE);
     cudaMalloc((void**) &result, sizeof(int));
-    cudaMemcpy(gpudata, data, sizeof(int) * DATA_SIZE, cudaMemcpyHostToDevice);
+    cudaMemcpy(gpu_data, data, sizeof(int) * DATA_SIZE, cudaMemcpyHostToDevice); // cpu to gpu
 
-    sum_of_squares<<<1, 1, 0>>>(gpudata, result);       // <<<numbers of block, numbers of thread, sizeof shared memory>>>(var...); 
+    sum_of_squares<<<1, 1, 0>>>(gpu_data, result);                               // <<<numbers of block, numbers of thread, sizeof shared memory>>>(var...); 
 
-    int gpu_sum;
-    cudaMemcpy(&gpu_sum, result, sizeof(int), cudaMemcpyDeviceToHost);
-    
-    int cpu_sum = 0;
+    cudaMemcpy(&gpu_sum, result, sizeof(int), cudaMemcpyDeviceToHost);           // gpu to cpu
+   
+
+    // cpu check data
     for(int i = 0; i < DATA_SIZE; i++) {
         cpu_sum += data[i] * data[i];
     }
@@ -51,7 +51,7 @@ int main()
     printf("gpu_sum: %d\n", gpu_sum);
     printf("cpu_sum: %d\n", cpu_sum);
     
-    cudaFree(gpudata);
+    cudaFree(gpu_data);
     cudaFree(result);
     return 0;
 }
