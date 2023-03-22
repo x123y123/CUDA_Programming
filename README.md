@@ -1,7 +1,14 @@
 # CUDA Programming
 
-## Install CUDA
-
+## Install CUDA and compile
+* [Install reference](https://shuuutin-cg.medium.com/ubuntu18-04%E5%AE%89%E8%A3%9Dcuda%E4%BB%A5%E5%8F%8A%E6%94%B9%E8%AE%8Acuda%E7%89%88%E6%9C%AC-b8ac917f880f
+)
+* Compile Nvcc
+```shell
+# Example: after we write a test.cu we can use following command to compile and run
+$ nvcc test.cu 
+$ ./a.out
+```
 ## Hello World
 
 ```c
