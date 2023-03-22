@@ -1,4 +1,4 @@
-/* add in multi-blocks and 1 thread in gpu */
+/* add in multi-blocks and multi-threads in gpu */
 #include <stdio.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
